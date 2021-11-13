@@ -1,0 +1,157 @@
+[gd_scene load_steps=14 format=2]
+
+[ext_resource path="res://Player/Player.gd" type="Script" id=1]
+[ext_resource path="res://Assets/shotgun.obj" type="ArrayMesh" id=2]
+[ext_resource path="res://Menu/Menu.gd" type="Script" id=3]
+[ext_resource path="res://Maze/Maze.gd" type="Script" id=4]
+[ext_resource path="res://Enemy/Enemy.tscn" type="PackedScene" id=5]
+[ext_resource path="res://Key/key.tscn" type="PackedScene" id=6]
+[ext_resource path="res://Key/End/End.gd" type="Script" id=7]
+[ext_resource path="res://Assets/The Biggest Discovery.ogg" type="AudioStream" id=8]
+
+[sub_resource type="SphereShape" id=1]
+radius = 0.7
+
+[sub_resource type="PlaneMesh" id=2]
+
+[sub_resource type="ConvexPolygonShape" id=3]
+points = PoolVector3Array( -1.00542, 0.00546448, -1.00546, -1.00542, 0.00546448, 1.00546, 1.00546, 0.00546448, -1.00546, 1.00546, 0.00546448, 1.00546 )
+
+[sub_resource type="CapsuleShape" id=4]
+radius = 0.5
+
+[sub_resource type="BoxShape" id=5]
+extents = Vector3( 0.4, 0.1, 0.4 )
+
+[node name="Game" type="Spatial"]
+
+[node name="Key" parent="." instance=ExtResource( 6 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.61471, 1.71034 )
+
+[node name="Maze" type="Spatial" parent="."]
+script = ExtResource( 4 )
+
+[node name="End" type="Area" parent="Maze"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.494929, 0.162988, 1.44794 )
+script = ExtResource( 7 )
+
+[node name="Light" type="OmniLight" parent="Maze/End"]
+light_color = Color( 0, 1, 0.27451, 1 )
+light_energy = 10.0
+omni_range = 1.9
+omni_attenuation = 2.0
+
+[node name="CollisionShape" type="CollisionShape" parent="Maze/End"]
+shape = SubResource( 1 )
+
+[node name="Enemy" parent="." instance=ExtResource( 5 )]
+transform = Transform( -0.0999639, 0, -0.00268748, 0, 0.1, 0, 0.00268748, 0, -0.0999639, 2.27377, 0.0444425, -0.129859 )
+space_override = 1
+
+[node name="Enemy2" parent="." instance=ExtResource( 5 )]
+transform = Transform( -0.0999654, 0.00156398, -0.00211415, 0.00157846, 0.0999853, -0.000670077, 0.00210336, -0.000703217, -0.0999754, 0.935362, 0.00744468, -1.45939 )
+space_override = 1
+
+[node name="Ground" type="StaticBody" parent="."]
+
+[node name="MeshInstance" type="MeshInstance" parent="Ground"]
+transform = Transform( 3, 0, 0, 0, 1, 0, 0, 0, 3, 0, 0, 0 )
+mesh = SubResource( 2 )
+material/0 = null
+
+[node name="CollisionShape" type="CollisionShape" parent="Ground"]
+transform = Transform( 3, 0, 0, 0, 1, 0, 0, 0, 3, 0, 0, 0 )
+shape = SubResource( 3 )
+
+[node name="Player" type="KinematicBody" parent="."]
+script = ExtResource( 1 )
+
+[node name="Body" type="CollisionShape" parent="Player"]
+transform = Transform( 1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 1.1, 0 )
+shape = SubResource( 4 )
+
+[node name="Feet" type="CollisionShape" parent="Player"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.2, 0 )
+shape = SubResource( 5 )
+
+[node name="Pivot" type="Spatial" parent="Player"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.6, 0 )
+
+[node name="Camera" type="Camera" parent="Player/Pivot"]
+current = true
+
+[node name="Gun" type="MeshInstance" parent="Player/Pivot"]
+transform = Transform( -8, 6.99382e-07, 0, 6.99382e-07, 8, 6.99382e-07, 6.11419e-14, 6.99382e-07, -8, 0.2, -0.15, -0.3 )
+mesh = ExtResource( 2 )
+material/0 = null
+material/1 = null
+material/2 = null
+material/3 = null
+material/4 = null
+material/5 = null
+material/6 = null
+material/7 = null
+material/8 = null
+material/9 = null
+material/10 = null
+material/11 = null
+material/12 = null
+material/13 = null
+material/14 = null
+material/15 = null
+material/16 = null
+material/17 = null
+material/18 = null
+material/19 = null
+material/20 = null
+material/21 = null
+material/22 = null
+material/23 = null
+material/24 = null
+material/25 = null
+material/26 = null
+material/27 = null
+material/28 = null
+material/29 = null
+material/30 = null
+material/31 = null
+material/32 = null
+
+[node name="UI" type="CanvasLayer" parent="."]
+
+[node name="Menu" type="Control" parent="UI"]
+pause_mode = 2
+visible = false
+margin_right = 40.0
+margin_bottom = 40.0
+script = ExtResource( 3 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ColorRect" type="ColorRect" parent="UI/Menu"]
+margin_right = 1024.0
+margin_bottom = 620.0
+color = Color( 0, 0, 0, 0.411765 )
+
+[node name="Restart" type="Button" parent="UI/Menu"]
+margin_left = 500.0
+margin_top = 320.0
+margin_right = 512.0
+margin_bottom = 340.0
+text = "Restart"
+
+[node name="Quit" type="Button" parent="UI/Menu"]
+margin_left = 500.0
+margin_top = 360.0
+margin_right = 557.0
+margin_bottom = 380.0
+text = "Quit"
+
+[node name="Music" type="AudioStreamPlayer3D" parent="."]
+stream = ExtResource( 8 )
+autoplay = true
+
+[connection signal="body_entered" from="Maze/End" to="Maze/End" method="_on_End_body_entered"]
+[connection signal="pressed" from="UI/Menu/Restart" to="UI/Menu" method="_on_Restart_pressed"]
+[connection signal="pressed" from="UI/Menu/Quit" to="UI/Menu" method="_on_Quit_pressed"]
